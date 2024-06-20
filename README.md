@@ -75,13 +75,9 @@ The following applications can be managed using Servo:
 - PostgreSQL
 - MongoDB
 
-## License
-
-[Include your license information here]
-
 ## Contact
 
-For issues, questions, or contributions, please contact [Your Contact Information].
+For issues, questions, or contributions, don't hesitate to get in touch with deepak.93p@gmail.com
 
 ---
 
