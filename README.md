@@ -1,6 +1,6 @@
 # Servo
 
-Servo is a command line tool that leverages Ansible to install or uninstall applications on remote servers. This tool supports a variety of applications including Apache HTTP Server, Nginx, Python, Java, Maven, PostgreSQL, MongoDB, and more.
+Servo is a command line tool that leverages Ansible to install or uninstall applications on remote servers. This tool supports a variety of applications including Apache HTTP Server, Nginx, Python, Java, Maven, PostgreSQL, MongoDB, Kafka and more.
 
 ## Features
 
