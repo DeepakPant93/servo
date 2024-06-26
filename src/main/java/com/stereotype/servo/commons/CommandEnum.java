@@ -1,5 +1,8 @@
 package com.stereotype.servo.commons;
 
-public enum CommandEnum {
+public class CommandEnum {
 
+    public enum Command {
+        INSTALL, UNINSTALL
+    }
 }

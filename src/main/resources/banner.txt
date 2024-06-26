@@ -1,0 +1,10 @@
+   _____
+  / ____|
+ | (___   ___ _ ____   _____
+  \___ \ / _ \ '__\ \ / / _ \
+  ____) |  __/ |   \ V / (_) |
+ |_____/ \___|_|    \_/ \___/
+
+
+Application ${spring.application.name} :: Version ${spring.application.version}
+Powered by Spring Boot ${spring-boot.version}
