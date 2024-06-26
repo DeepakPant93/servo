@@ -14,12 +14,12 @@ public class ServoCommand {
     private CommandEngine commandEngine;
 
     @Command(command = ServoConstant.INSTALL, description = "Install an application")
-    public Integer install(@Option(required = true, longNames = "app") String app) {
+    public Integer install(@Option(required = true, longNames = "app", shortNames = 'a', description = "Install an application") String app) {
         return commandEngine.execute(app, CommandEnum.Command.INSTALL);
     }
 
     @Command(command = ServoConstant.UNINSTALL, description = "Uninstall the application")
-    public Integer uninstall(@Option(required = true, longNames = "app") String app) {
+    public Integer uninstall(@Option(required = true, longNames = "app", shortNames = 'a', description = "Uninstall an application") String app) {
         return commandEngine.execute(app, CommandEnum.Command.UNINSTALL);
     }
 }

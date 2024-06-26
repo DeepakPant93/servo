@@ -22,31 +22,31 @@ uninstall <application> -i '<hosts>' -p 'apt/yum' -u '<user>'
 
 ### Command Options
 
-- `-i`: (Optional) Comma-separated list of host/hosts. If not provided, hosts will be picked from the `servo.config` file.
-- `-p`: (Optional) Package manager for the remote server (`apt` or `yum`). Defaults to `apt` if not specified in the command or `servo.config`.
-- `-u`: (Optional) Username for the remote server. If not provided, it must be defined in the `servo.config` file.
+- `-i`: (Optional) Comma-separated list of host/hosts. If not provided, hosts will be picked from the `config.ini` file.
+- `-p`: (Optional) Package manager for the remote server (`apt` or `yum`). Defaults to `apt` if not specified in the command or `config.ini`.
+- `-u`: (Optional) Username for the remote server. If not provided, it must be defined in the `config.ini` file.
 
 ### Variable Preference
 Variables will be picked in the following order:
 1. Command line
-2. `servo.config` file
+2. `config.ini` file
 3. Default values (if available)
 
-If a required variable is missing in both the command and the `servo.config` file, an error will occur.
+If a required variable is missing in both the command and the `config.ini` file, an error will occur.
 
 ## Prerequisites
 
 - **Ansible**
 - **Java 21**
 
-Ensure the Ansible installation path is defined in the `servo.config` file, otherwise, the default Ansible path will be used.
+Ensure the Ansible installation path is defined in the `config.ini` file, otherwise, the default Ansible path will be used.
 
 ## Configuration File
 
 ### Path
-`/etc/servo/servo.config`
+`/etc/servo/config.ini`
 
-### Sample Configuration (`servo.config`)
+### Sample Configuration (`config.ini`)
 ```ini
 [general]
 ansible_path = /usr/bin/ansible
