@@ -18,48 +18,52 @@ import java.util.*;
 public class ConfigFileUtil {
 
     // Config file default path
-    private final static String path = "/etc/servo";
-    private final static String filename = "config.ini";
-    private final static String filepath = path + "/" + filename;
+    private final static String PATH = "/etc/servo";
+    private final static String FILENAME = "config.ini";
+    private final static String FILEPATH = PATH + "/" + FILENAME;
+
 
     // Section Keys
+    private final static String ANSIBLE_SECTION = "ansible";
     private final static String GENERAL_SECTION = "general";
-    private final static String DEFAULT_SECTION = "defaults";
     private final static String HOST_SECTION = "hosts";
 
 
     // Config keys
     private final static String ANSIBLE_PATH_KEY = "ansible_path";
+    private final static String ANSIBLE_PLAYBOOK_REPO_PATH_KEY = "playbook_repo_path";
     private final static String PACKAGE_MANAGER_KEY = "package_manager";
     private final static String USER_KEY = "user";
 
 
     // Config Default keys
-    private final static String ANSIBLE_PATH_DEFAULT_KEY = "/usr/bin/ansible";
-    private final static String PACKAGE_MANAGER_DEFAULT_KEY = "apt";
-
+    private final static String DEFAULT_ANSIBLE_PATH = "/usr/bin/ansible";
+    private final static String DEFAULT_PACKAGE_MANAGER = "apt";
+    private static final String DEFAULT_ANSIBLE_PLAYBOOK_REPO_PATH = "https://raw.githubusercontent.com/DeepakPant93/servo-ansible-playbooks/main/scripts";
 
     private final INIConfiguration config;
 
     public ConfigFileUtil() {
         try {
             Configurations configs = new Configurations();
-            this.config = configs.ini(new File(filepath));
+            this.config = configs.ini(new File(FILEPATH));
         } catch (ConfigurationException e) {
-            throw new FileNotFoundException("Exception occurred while reading the file " + filepath, e);
+            throw new FileNotFoundException("Exception occurred while reading the file " + FILEPATH, e);
         }
     }
 
     public ServoConfig servoConfig() {
         ConfigFileUtil configFileUtil = new ConfigFileUtil();
 
+        Map<String, String> ansibleSection = configFileUtil.section(ANSIBLE_SECTION);
         Map<String, String> generalSection = configFileUtil.section(GENERAL_SECTION);
-        Map<String, String> defaultSection = configFileUtil.section(DEFAULT_SECTION);
         Map<String, String> hostSection = configFileUtil.section(HOST_SECTION);
 
-        String ansiblePath = generalSection.getOrDefault(ANSIBLE_PATH_KEY, ANSIBLE_PATH_DEFAULT_KEY);
-        String packageManager = defaultSection.getOrDefault(PACKAGE_MANAGER_KEY, PACKAGE_MANAGER_DEFAULT_KEY);
-        String user = defaultSection.get(USER_KEY);
+        String ansiblePath = ansibleSection.getOrDefault(ANSIBLE_PATH_KEY, DEFAULT_ANSIBLE_PATH);
+        String ansiblePlaybookRepoPath = ansibleSection.getOrDefault(ANSIBLE_PLAYBOOK_REPO_PATH_KEY, DEFAULT_ANSIBLE_PLAYBOOK_REPO_PATH);
+
+        String packageManager = generalSection.getOrDefault(PACKAGE_MANAGER_KEY, DEFAULT_PACKAGE_MANAGER);
+        String user = generalSection.get(USER_KEY);
 
         // Check user
         if (user == null || user.isBlank()) {
@@ -80,6 +84,7 @@ public class ConfigFileUtil {
         ServoConfig servoConfig = new ServoConfig();
 
         servoConfig.setAnsiblePath(ansiblePath);
+        servoConfig.setAnsiblePlaybookRepoPath(ansiblePlaybookRepoPath);
         servoConfig.setPackageManager(packageManager);
         servoConfig.setUser(user);
         servoConfig.setHosts(hostSection);
@@ -104,6 +109,7 @@ public class ConfigFileUtil {
     @NoArgsConstructor
     public class ServoConfig {
         private String ansiblePath;
+        private String ansiblePlaybookRepoPath;
         private String packageManager;
         private String user;
         private Map<String, String> hosts;

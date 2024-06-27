@@ -26,7 +26,7 @@ public class CommandEngine {
 
     public Integer execute(String app, Command command) {
         ServoConfig config = configFileUtil.servoConfig();
-        String tempFilepath = fileUtil.download(app, config.getPackageManager(), command.name());
+        String tempFilepath = fileUtil.download(app, config.getPackageManager(), config.getAnsiblePlaybookRepoPath(), command.name());
 
         Integer exitCode = null;
         if (tempFilepath != null && !tempFilepath.isBlank()) {

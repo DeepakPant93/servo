@@ -48,10 +48,11 @@ Ensure the Ansible installation path is defined in the `config.ini` file, otherw
 
 ### Sample Configuration (`config.ini`)
 ```ini
-[general]
+[ansible]
 ansible_path = /usr/bin/ansible
+#playbook_repo_path = /path/to/servo-ansible-playbook
 
-[defaults]
+[general]
 package_manager = apt
 user = default_user
 

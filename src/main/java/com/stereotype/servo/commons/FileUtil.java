@@ -17,13 +17,13 @@ import java.nio.file.StandardCopyOption;
 @Component
 public class FileUtil {
 
-    private static final String BASE_DEFAULT_URL_FORMAT = "https://raw.githubusercontent.com/DeepakPant93/servo-ansible-playbooks/main/scripts/%s/%s/%s.yml";
+    private static final String BASE_DEFAULT_URL_FORMAT = "/%s/%s/%s.yml";
     private static final String TEMP_FILENAME = "script.yml";
     private static final String TEMP_DIRECTORY = System.getProperty("java.io.tmpdir");
 
-    public String download(String app, String packageManager, String command) {
+    public String download(String app, String packageManager, String ansiblePlaybookRepoPath, String command) {
         String tempFilepath = null;
-        String url = populateURL(app, packageManager, command);
+        String url = populateURL(app, packageManager, ansiblePlaybookRepoPath, command);
 
         try {
             URL fileUrl = new URL(url);
@@ -49,7 +49,7 @@ public class FileUtil {
         }
     }
 
-    private String populateURL(String app, String packageManager, String command) {
-        return String.format(BASE_DEFAULT_URL_FORMAT, app.toLowerCase(), packageManager, command.toLowerCase());
+    private String populateURL(String app, String packageManager, String ansiblePlaybookRepoPath, String command) {
+        return String.format(ansiblePlaybookRepoPath.concat(BASE_DEFAULT_URL_FORMAT), app.toLowerCase(), packageManager, command.toLowerCase());
     }
 }
