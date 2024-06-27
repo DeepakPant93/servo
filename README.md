@@ -14,10 +14,16 @@ Servo is a command line tool that leverages Ansible to install or uninstall appl
 ```
 install <application> -i '<hosts>' -p 'apt/yum' -u '<user>'
 ```
+```
+install nginx
+```
 
 ### Uninstall Command
 ```
 uninstall <application> -i '<hosts>' -p 'apt/yum' -u '<user>'
+```
+```
+uninstall postgres
 ```
 
 ### Command Options
