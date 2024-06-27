@@ -86,6 +86,12 @@ The following applications can be managed using Servo:
 
 For issues, questions, or contributions, don't hesitate to get in touch with deepak.93p@gmail.com
 
+## License
+
+This repository is licensed under the Apache License Version 2. See the [LICENSE](LICENSE) file for more details.
+
+---
+
 ---
 
 Happy DevOps-ing with Servo!
