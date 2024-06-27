@@ -5,4 +5,8 @@ public class CommandEnum {
     public enum Command {
         INSTALL, UNINSTALL
     }
+
+    public enum PackageManager {
+        APT, YUM
+    }
 }

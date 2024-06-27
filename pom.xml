@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.streotype</groupId>
     <artifactId>servo</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3</version>
     <name>servo</name>
     <description>Servo is a command line tool that leverages Ansible to install or uninstall applications on remote
         servers.

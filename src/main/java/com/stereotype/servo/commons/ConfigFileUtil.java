@@ -2,6 +2,7 @@ package com.stereotype.servo.commons;
 
 import com.stereotype.servo.exception.ConfigNotFoundException;
 import com.stereotype.servo.exception.FileNotFoundException;
+import com.stereotype.servo.exception.InvalidPackageManagerException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.configuration2.INIConfiguration;
@@ -11,10 +12,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class ConfigFileUtil {
@@ -63,12 +61,20 @@ public class ConfigFileUtil {
         String packageManager = defaultSection.getOrDefault(PACKAGE_MANAGER_KEY, PACKAGE_MANAGER_DEFAULT_KEY);
         String user = defaultSection.get(USER_KEY);
 
+        // Check user
         if (user == null || user.isBlank()) {
             throw new ConfigNotFoundException("User is blank in the configuration file.");
         }
 
+        // Check host
         if (hostSection.isEmpty()) {
             throw new ConfigNotFoundException("Host is not found in the configuration file.");
+        }
+
+        // Check package manager
+        boolean validPackageManager = Arrays.stream(CommandEnum.PackageManager.values()).anyMatch(pm -> pm.name().equalsIgnoreCase(packageManager));
+        if (!validPackageManager) {
+            throw new InvalidPackageManagerException(packageManager + " is not a valid package manager.");
         }
 
         ServoConfig servoConfig = new ServoConfig();

@@ -1,16 +1,18 @@
 package com.stereotype.servo.commons;
 
+import com.stereotype.servo.exception.FileNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 /**
- * This class provides utility methods for reading and writing file content.
- * It contains methods to read and write files.
+ * This class provides utility methods for downloading file content.
+ * It contains methods to download files.
  */
 @Component
 public class FileUtil {
@@ -35,7 +37,19 @@ public class FileUtil {
         return tempFilepath;
     }
 
+    public void delete(String filepath) {
+        Path path = Paths.get(filepath);
+
+        try {
+            if (Files.exists(path)) {
+                Files.delete(path);
+            }
+        } catch (IOException e) {
+            throw new FileNotFoundException("File not found at " + filepath);
+        }
+    }
+
     private String populateURL(String app, String packageManager, String command) {
-        return String.format(BASE_DEFAULT_URL_FORMAT, app, packageManager, command.toLowerCase());
+        return String.format(BASE_DEFAULT_URL_FORMAT, app.toLowerCase(), packageManager, command.toLowerCase());
     }
 }

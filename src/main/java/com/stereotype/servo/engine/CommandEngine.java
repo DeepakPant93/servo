@@ -4,6 +4,7 @@ import com.stereotype.servo.commons.CommandEnum.Command;
 import com.stereotype.servo.commons.ConfigFileUtil;
 import com.stereotype.servo.commons.ConfigFileUtil.ServoConfig;
 import com.stereotype.servo.commons.FileUtil;
+import com.stereotype.servo.exception.CommandNotFoundException;
 import com.stereotype.servo.exception.FileNotFoundException;
 import com.stereotype.servo.exception.ProcessInterruptedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,16 @@ public class CommandEngine {
         ServoConfig config = configFileUtil.servoConfig();
         String tempFilepath = fileUtil.download(app, config.getPackageManager(), command.name());
 
-        return execute(config, tempFilepath);
+        Integer exitCode = null;
+        if (tempFilepath != null && !tempFilepath.isBlank()) {
+            exitCode = execute(config, tempFilepath);
+
+            // Cleanup - Deletes the temp file
+            fileUtil.delete(tempFilepath);
+        } else {
+            throw new CommandNotFoundException("Provided command does not exists.");
+        }
+        return exitCode;
     }
 
     public Integer execute(ServoConfig config, String filepath) {
