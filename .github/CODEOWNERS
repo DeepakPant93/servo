@@ -1,1 +1,8 @@
+##########################################
+#             code ownership
+##########################################
 
+# Each line is a file pattern followed by one or more owners
+
+# The '*' pattern covers all files in the repository
+* @DeepakPant93
