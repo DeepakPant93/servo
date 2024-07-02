@@ -10,17 +10,22 @@
     </parent>
     <groupId>com.streotype</groupId>
     <artifactId>servo</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <name>servo</name>
     <description>Servo is a command line tool that leverages Ansible to install or uninstall applications on remote
         servers.
     </description>
     <url/>
     <licenses>
-        <license/>
+        <license>
+            <name>Apache License Version 2</name>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <name>Deepak Pant</name>
+            <email>deepak.93p@gmail.com</email>
+        </developer>
     </developers>
     <scm>
         <connection/>

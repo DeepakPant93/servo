@@ -18,27 +18,27 @@ import java.util.*;
 public class ConfigFileUtil {
 
     // Config file default path
-    private final static String PATH = "/etc/servo";
-    private final static String FILENAME = "config.ini";
-    private final static String FILEPATH = PATH + "/" + FILENAME;
+    private static final String PATH = "/etc/servo";
+    private static final String FILENAME = "config.ini";
+    private static final String FILEPATH = PATH + "/" + FILENAME;
 
 
     // Section Keys
-    private final static String ANSIBLE_SECTION = "ansible";
-    private final static String GENERAL_SECTION = "general";
-    private final static String HOST_SECTION = "hosts";
+    private static final String ANSIBLE_SECTION = "ansible";
+    private static final String GENERAL_SECTION = "general";
+    private static final String HOST_SECTION = "hosts";
 
 
     // Config keys
-    private final static String ANSIBLE_PATH_KEY = "ansible_path";
-    private final static String ANSIBLE_PLAYBOOK_REPO_PATH_KEY = "playbook_repo_path";
-    private final static String PACKAGE_MANAGER_KEY = "package_manager";
-    private final static String USER_KEY = "user";
+    private static final String ANSIBLE_PATH_KEY = "ansible_path";
+    private static final String ANSIBLE_PLAYBOOK_REPO_PATH_KEY = "playbook_repo_path";
+    private static final String PACKAGE_MANAGER_KEY = "package_manager";
+    private static final String USER_KEY = "user";
 
 
     // Config Default keys
-    private final static String DEFAULT_ANSIBLE_PATH = "/usr/bin/ansible";
-    private final static String DEFAULT_PACKAGE_MANAGER = "apt";
+    private static final String DEFAULT_ANSIBLE_PATH = "/usr/bin/ansible";
+    private static final String DEFAULT_PACKAGE_MANAGER = "apt";
     private static final String DEFAULT_ANSIBLE_PLAYBOOK_REPO_PATH = "https://raw.githubusercontent.com/DeepakPant93/servo-ansible-playbooks/main/scripts";
 
     private final INIConfiguration config;
@@ -52,6 +52,11 @@ public class ConfigFileUtil {
         }
     }
 
+    /**
+     * Generates a ServoConfig object based on the configuration settings retrieved from the configuration file.
+     *
+     * @return the generated ServoConfig object
+     */
     public ServoConfig servoConfig() {
         ConfigFileUtil configFileUtil = new ConfigFileUtil();
 

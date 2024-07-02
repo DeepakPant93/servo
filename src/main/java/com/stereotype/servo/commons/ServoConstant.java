@@ -1,9 +1,13 @@
 package com.stereotype.servo.commons;
 
-public interface ServoConstant {
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
+public class ServoConstant {
+
 
     // Servo Commands
-    String INSTALL = "install";
-    String UNINSTALL = "uninstall";
+    public static final String INSTALL = "install";
+    public static final String UNINSTALL = "uninstall";
 
 }

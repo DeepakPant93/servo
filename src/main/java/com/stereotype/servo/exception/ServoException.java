@@ -2,21 +2,21 @@ package com.stereotype.servo.exception;
 
 public class ServoException extends RuntimeException {
 
-    public final String CODE;
+    public final String code;
 
     public ServoException(String code) {
         super();
-        this.CODE = code;
+        this.code = code;
     }
 
     public ServoException(String code, String message) {
         super(message);
-        CODE = code;
+        this.code = code;
     }
 
     public ServoException(String code, String message, Throwable cause) {
         super(message, cause);
-        CODE = code;
+        this.code = code;
     }
 
 }

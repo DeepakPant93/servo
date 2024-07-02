@@ -7,7 +7,8 @@ import com.stereotype.servo.commons.FileUtil;
 import com.stereotype.servo.exception.CommandNotFoundException;
 import com.stereotype.servo.exception.FileNotFoundException;
 import com.stereotype.servo.exception.ProcessInterruptedException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -16,19 +17,25 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
+@Slf4j
 public class CommandEngine {
 
-    @Autowired
     private ConfigFileUtil configFileUtil;
-
-    @Autowired
     private FileUtil fileUtil;
 
+    /**
+     * Executes a command for a given application.
+     *
+     * @param app     the application to execute the command on
+     * @param command the command to be executed
+     * @return the exit code of the command execution
+     */
     public Integer execute(String app, Command command) {
         ServoConfig config = configFileUtil.servoConfig();
         String tempFilepath = fileUtil.download(app, config.getPackageManager(), config.getAnsiblePlaybookRepoPath(), command.name());
 
-        Integer exitCode = null;
+        Integer exitCode;
         if (tempFilepath != null && !tempFilepath.isBlank()) {
             exitCode = execute(config, tempFilepath);
 
@@ -40,14 +47,14 @@ public class CommandEngine {
         return exitCode;
     }
 
-    public Integer execute(ServoConfig config, String filepath) {
-        Integer exitCode = null;
+    private Integer execute(ServoConfig config, String filepath) {
+        Integer exitCode;
         try {
             String hosts = String.join(",", config.listHosts()) + ",";
             String ansibleCommand = config.getAnsiblePath() + "/" + "ansible-playbook";
 
             List<String> command = List.of(ansibleCommand, "-i", hosts, "-u", config.getUser(), filepath);
-            System.out.println("Running command :: " + String.join(" ", command));
+            log.info("Command to be executed {} ", String.join(" ", command));
 
             ProcessBuilder processBuilder = new ProcessBuilder(command);
 
@@ -60,13 +67,13 @@ public class CommandEngine {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                log.info(line);
             }
 
             if (exitCode == 0) {
-                System.out.println("Playbook executed successfully!. Exit code: " + exitCode);
+                log.info("Playbook executed successfully!. Exit code: {}", exitCode);
             } else {
-                System.out.println("Error in executing playbook. Exit code: " + exitCode);
+                log.error("Error in executing playbook. Exit code: {}", exitCode);
             }
         } catch (InterruptedException e) {
             throw new ProcessInterruptedException("Unable to complete the process.", e);
