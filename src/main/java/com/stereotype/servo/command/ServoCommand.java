@@ -34,4 +34,12 @@ public class ServoCommand {
     public Integer uninstall(@Option(required = true, longNames = "app", shortNames = 'a', description = "Uninstall an application") String app) {
         return commandEngine.execute(app, CommandEnum.Command.UNINSTALL);
     }
+
+    /**
+     * Setup the server.
+     */
+    @Command(command = ServoConstant.SETUP, description = "Setup the server")
+    public void setup() {
+        commandEngine.setup();
+    }
 }

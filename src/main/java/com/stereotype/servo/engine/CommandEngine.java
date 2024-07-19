@@ -1,9 +1,19 @@
+/*
+###############################################################################
+# Copyright (c) 2024-present, Deepak Pant. - All Rights Reserved              #
+# Unauthorized copying of this file, via any medium is strictly prohibited    #
+# Proprietary and confidential                                                #
+# Written by Deepak Pant, July 2024                                           #
+###############################################################################
+*/
+
 package com.stereotype.servo.engine;
 
 import com.stereotype.servo.commons.CommandEnum.Command;
 import com.stereotype.servo.commons.ConfigFileUtil;
 import com.stereotype.servo.commons.ConfigFileUtil.ServoConfig;
 import com.stereotype.servo.commons.FileUtil;
+import com.stereotype.servo.commons.ScriptRunner;
 import com.stereotype.servo.exception.CommandNotFoundException;
 import com.stereotype.servo.exception.FileNotFoundException;
 import com.stereotype.servo.exception.ProcessInterruptedException;
@@ -23,6 +33,7 @@ public class CommandEngine {
 
     private ConfigFileUtil configFileUtil;
     private FileUtil fileUtil;
+    private ScriptRunner scriptRunner;
 
     /**
      * Executes a command for a given application.
@@ -45,6 +56,20 @@ public class CommandEngine {
             throw new CommandNotFoundException("Provided command does not exists.");
         }
         return exitCode;
+    }
+
+
+    public void setup() {
+        ServoConfig config = configFileUtil.servoConfig();
+        List<String> hosts = config.listHosts();
+        String publicKey = config.getPublicKey();
+        String privateKey = config.getPrivateKey();
+        String user = config.getUser();
+
+        for (String host : hosts) {
+            log.info("Updating authorized keys for host: {}", host);
+            scriptRunner.updateAuthKeys(host, user, privateKey, publicKey);
+        }
     }
 
     private Integer execute(ServoConfig config, String filepath) {

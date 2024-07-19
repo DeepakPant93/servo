@@ -1,3 +1,12 @@
+/*
+###############################################################################
+# Copyright (c) 2024-present, Deepak Pant. - All Rights Reserved              #
+# Unauthorized copying of this file, via any medium is strictly prohibited    #
+# Proprietary and confidential                                                #
+# Written by Deepak Pant, July 2024                                           #
+###############################################################################
+*/
+
 package com.stereotype.servo.commons;
 
 import com.stereotype.servo.exception.ConfigNotFoundException;
@@ -34,6 +43,8 @@ public class ConfigFileUtil {
     private static final String ANSIBLE_PLAYBOOK_REPO_PATH_KEY = "playbook_repo_path";
     private static final String PACKAGE_MANAGER_KEY = "package_manager";
     private static final String USER_KEY = "user";
+    private static final String PUBLIC_KEY = "public_key";
+    private static final String PRIVATE_KEY = "private_key";
 
 
     // Config Default keys
@@ -69,6 +80,8 @@ public class ConfigFileUtil {
 
         String packageManager = generalSection.getOrDefault(PACKAGE_MANAGER_KEY, DEFAULT_PACKAGE_MANAGER);
         String user = generalSection.get(USER_KEY);
+        String publicKey = generalSection.get(PUBLIC_KEY);
+        String privateKey = generalSection.get(PRIVATE_KEY);
 
         // Check user
         if (user == null || user.isBlank()) {
@@ -92,6 +105,8 @@ public class ConfigFileUtil {
         servoConfig.setAnsiblePlaybookRepoPath(ansiblePlaybookRepoPath);
         servoConfig.setPackageManager(packageManager);
         servoConfig.setUser(user);
+        servoConfig.setPublicKey(publicKey);
+        servoConfig.setPrivateKey(privateKey);
         servoConfig.setHosts(hostSection);
 
         return servoConfig;
@@ -118,6 +133,8 @@ public class ConfigFileUtil {
         private String packageManager;
         private String user;
         private Map<String, String> hosts;
+        private String publicKey;
+        private String privateKey;
 
         public List<String> listHosts() {
             return hosts.values().stream().toList();
