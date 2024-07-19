@@ -22,7 +22,7 @@ fi
 PUBLIC_KEY_CONTENT=$(cat "$PUBLIC_KEY_PATH")
 
 # SSH into the remote machine and append the public key to authorized_keys
-ssh -i "$PRIVATE_KEY_PATH" "$USERNAME@$REMOTE_HOST" << EOF
+ssh -o StrictHostKeyChecking=no -i "$PRIVATE_KEY_PATH" "$USERNAME@$REMOTE_HOST" << EOF
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 echo "$PUBLIC_KEY_CONTENT" >> ~/.ssh/authorized_keys
